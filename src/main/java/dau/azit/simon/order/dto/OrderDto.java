@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class OrderDto {
 
-	public record CreateOrderDto(List<OrderLine> orderLines, Long customerId, Optional<String> memo) {
+	public record CreateOrderDto(List<OrderLineDto> orderLines, Long customerId, Optional<String> memo) {
 	}
 
 	public record OrderLineDto(Long productId, int quantity) {

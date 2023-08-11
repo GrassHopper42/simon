@@ -25,7 +25,7 @@ public class OrderService {
 				.map(orderLineDto -> {
 					//TODO : 실제 Product 클래스로 수정 필요
 					Product product = new Product();
-					return new OrderLine(product, orderLineDto.getQuantity());
+					return new OrderLine(product, orderLineDto.quantity());
 				})
 				.collect(Collectors.toList());
 
@@ -42,7 +42,7 @@ public class OrderService {
 				.map(orderLineDto -> {
 					//TODO : 실제 Product 클래스로 수정 필요
 					Product product = new Product();
-					return new OrderLine(product, orderLineDto.getQuantity());
+					return new OrderLine(product, orderLineDto.quantity());
 				})
 				.collect(Collectors.toList());
 
