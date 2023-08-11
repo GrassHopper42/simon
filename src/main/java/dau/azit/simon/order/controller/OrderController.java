@@ -1,8 +1,12 @@
 package dau.azit.simon.order.controller;
 
+
+import dau.azit.simon.order.domain.Order;
 import dau.azit.simon.order.dto.OrderDto;
 import dau.azit.simon.order.service.OrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +19,8 @@ public class OrderController {
 	private final OrderService orderService;
 
 	@PostMapping("/first")
-	public String createFirstOrder(@RequestBody() OrderDto.CreateFirstOrderDto createFirstOrderDto) {
-		return orderService.createFirstOrder(createFirstOrderDto).toString();
+	public ResponseEntity<Order> createFirstOrder(@Valid @RequestBody() OrderDto.CreateFirstOrderDto createFirstOrderDto) {
+		return ResponseEntity.ok(orderService.createFirstOrder(createFirstOrderDto));
 	}
 
 }

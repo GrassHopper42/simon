@@ -41,12 +41,8 @@ public class Order {
 	}
 
 
-	static public Order createOrder(List<OrderLine> orderLines, Customer customer, String memo) {
-		return new Order(orderLines, customer, memo, OrderStatus.COMPLETE);
-	}
-
-	static public Order createEstimation(List<OrderLine> orderLines, Customer customer, String memo) {
-		return new Order(orderLines, customer, memo, OrderStatus.ESTIMATE);
+	static public Order createOrder(List<OrderLine> orderLines, Customer customer, OrderStatus orderStatus, String memo) {
+		return new Order(orderLines, customer, memo, orderStatus);
 	}
 
 
@@ -60,8 +56,4 @@ public class Order {
 		this.status = status;
 	}
 
-}
-
-enum OrderStatus {
-	ESTIMATE, COMPLETE
 }

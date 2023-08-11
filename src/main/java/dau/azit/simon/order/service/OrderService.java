@@ -7,9 +7,7 @@ import dau.azit.simon.order.domain.OrderLine;
 import dau.azit.simon.order.domain.mock.Product;
 import dau.azit.simon.order.dto.OrderDto;
 import dau.azit.simon.order.repository.OrderRepository;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +33,7 @@ public class OrderService {
 				})
 				.collect(Collectors.toList());
 
-		Order order = Order.createOrder(orderLines, customer, dto.memo().orElse(null));
+		Order order = Order.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
 
 		return orderRepository.save(order);
 	}
@@ -56,7 +54,7 @@ public class OrderService {
 				})
 				.collect(Collectors.toList());
 //
-		Order order = Order.createOrder(orderLines, customer, dto.memo().orElse(null));
+		Order order = Order.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
 
 		return orderRepository.save(order);
 //	}
