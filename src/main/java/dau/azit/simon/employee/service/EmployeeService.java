@@ -1,7 +1,7 @@
 package dau.azit.simon.employee.service;
 
-import dau.azit.simon.employee.controller.dto.EmployeeCreateRequestDto;
-import dau.azit.simon.employee.controller.dto.EmployeeUpdateRequestDto;
+import dau.azit.simon.employee.dto.EmployeeCreateRequestDto;
+import dau.azit.simon.employee.dto.EmployeeUpdateRequestDto;
 import dau.azit.simon.employee.entity.Employee;
 import dau.azit.simon.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +34,10 @@ public class EmployeeService {
     @Transactional
     public Employee addOne(EmployeeCreateRequestDto dto) {
         return employeeRepository.save(new Employee(
-                dto.getName(),
-                dto.getAddress(),
-                dto.getStatus(),
-                dto.getDescription()
+                dto.name(),
+                dto.address(),
+                dto.status(),
+                dto.description()
         ));
     }
 

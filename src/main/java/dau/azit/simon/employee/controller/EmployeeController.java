@@ -1,7 +1,7 @@
 package dau.azit.simon.employee.controller;
 
-import dau.azit.simon.employee.controller.dto.EmployeeCreateRequestDto;
-import dau.azit.simon.employee.controller.dto.EmployeeUpdateRequestDto;
+import dau.azit.simon.employee.dto.EmployeeCreateRequestDto;
+import dau.azit.simon.employee.dto.EmployeeUpdateRequestDto;
 import dau.azit.simon.employee.entity.Employee;
 import dau.azit.simon.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
