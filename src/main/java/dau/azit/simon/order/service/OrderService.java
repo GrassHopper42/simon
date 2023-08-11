@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class OrderService {
 	private final OrderRepository orderRepository;
 
-	public Order createOrder(OrderDto.CreateOrderDto dto) {
+	public Order createAdditionalOrder(OrderDto.CreateAdditionalOrderDto dto) {
 		//TODO : 실제 Customer 클래스로 수정 필요
 		Customer customer = new Customer();
 
@@ -34,21 +34,5 @@ public class OrderService {
 		return orderRepository.save(order);
 	}
 
-	public Order createEstimation(OrderDto.CreateOrderDto dto) {
-		//TODO : 실제 Customer 클래스로 수정 필요
-		Customer customer = new Customer();
-
-		List<OrderLine> orderLines = dto.orderLines().stream()
-				.map(orderLineDto -> {
-					//TODO : 실제 Product 클래스로 수정 필요
-					Product product = new Product();
-					return new OrderLine(product, orderLineDto.quantity());
-				})
-				.collect(Collectors.toList());
-
-		Order order = Order.createEstimation(orderLines, customer, dto.memo().orElse(null));
-
-		return orderRepository.save(order);
-	}
 
 }
