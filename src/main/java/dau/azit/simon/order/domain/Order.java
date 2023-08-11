@@ -40,6 +40,16 @@ public class Order {
 	public Order() {
 	}
 
+
+	static public Order createOrder(List<OrderLine> orderLines, Customer customer, String memo) {
+		return new Order(orderLines, customer, memo, OrderStatus.COMPLETE);
+	}
+
+	static public Order createEstimation(List<OrderLine> orderLines, Customer customer, String memo) {
+		return new Order(orderLines, customer, memo, OrderStatus.ESTIMATE);
+	}
+
+
 	private Order(List<OrderLine> orderLines, Customer customer, String memo, OrderStatus status) {
 		this.uid = UUID.randomUUID();
 		this.orderDate = new Date();
