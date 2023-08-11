@@ -1,5 +1,6 @@
 package dau.azit.simon.employee.entity;
 
+import dau.azit.simon.employee.controller.dto.EmployeeUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,6 +34,13 @@ public class Employee {
         this.address = address;
         this.status = status;
         this.description = desc;
+    }
+
+    public void updateFiled(EmployeeUpdateRequestDto dto) {
+        this.name = dto.getName();
+        this.address = dto.getAddress();
+        this.status = dto.getStatus();
+        this.description = dto.getDescription();
     }
 
 }
