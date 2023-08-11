@@ -2,10 +2,13 @@ package dau.azit.simon.order.domain;
 
 import dau.azit.simon.order.domain.mock.Product;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.UUID;
 
 @Entity
+@Getter
+@Table(name = "orderLines")
 public class OrderLine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,11 +1,16 @@
 package dau.azit.simon.order.domain;
 
+import dau.azit.simon.order.domain.mock.Customer;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "orders")
+@Getter
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +30,23 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 
+	@OneToMany()
+	private List<OrderLine> orderLines;
+
+	// TODO : 실제 Customer 클래스로 수정 필요
+	@ManyToOne()
+	private Customer customer;
 
 	public Order() {
 	}
 
-	private Order(String memo, long totalPrice, OrderStatus status) {
+	private Order(List<OrderLine> orderLines, Customer customer, String memo, OrderStatus status) {
 		this.uid = UUID.randomUUID();
 		this.orderDate = new Date();
 		this.memo = memo;
-		this.totalPrice = totalPrice;
+		this.orderLines = orderLines;
+		this.customer = customer;
+		this.totalPrice = orderLines.stream().mapToLong(OrderLine::getSalesPrice).sum();
 		this.status = status;
 	}
 
