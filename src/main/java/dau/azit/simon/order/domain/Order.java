@@ -1,6 +1,6 @@
 package dau.azit.simon.order.domain;
 
-import dau.azit.simon.order.domain.mock.Customer;
+import dau.azit.simon.customer.domain.Customer;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -30,7 +30,7 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 
-	@OneToMany()
+	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<OrderLine> orderLines;
 
 	// TODO : 실제 Customer 클래스로 수정 필요
