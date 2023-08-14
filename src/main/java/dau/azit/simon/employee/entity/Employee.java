@@ -5,12 +5,16 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.UUID;
 
 @Getter
 @Entity
+@Where(clause = "deleted = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLDelete(sql = "UPDATE employee SET deleted = true WHERE id = ?")
 public class Employee {
 
     @Id
@@ -27,6 +31,8 @@ public class Employee {
     private String status;
 
     private String description;
+
+    private boolean deleted;
 
     public Employee(String name, String address, String status, String desc) {
         this.uid = UUID.randomUUID();
