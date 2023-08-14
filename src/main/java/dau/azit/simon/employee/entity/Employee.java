@@ -36,7 +36,7 @@ public class Employee {
         this.description = desc;
     }
 
-    public void updateFiled(EmployeeUpdateRequestDto dto) {
+    public void updateField(EmployeeUpdateRequestDto dto) {
         this.name = dto.name();
         this.address = dto.address();
         this.status = dto.status();

@@ -44,7 +44,7 @@ public class EmployeeService {
     @Transactional
     public Employee modifyOne(UUID uid, EmployeeUpdateRequestDto dto) {
         Employee employee = findOneByUid(uid);
-        employee.updateFiled(dto);
+        employee.updateField(dto);
         return employee;
     }
 

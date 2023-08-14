@@ -10,7 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -32,7 +34,9 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<Employee> employeeAdd(@RequestBody EmployeeCreateRequestDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addOne(dto));
+        Employee employee = employeeService.addOne(dto);
+        String currentUri = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
+        return ResponseEntity.created(URI.create(currentUri + "/" + employee.getUid())).body(employee);
     }
 
     @PutMapping("/{uid}")
