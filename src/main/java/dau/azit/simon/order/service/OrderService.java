@@ -21,9 +21,10 @@ public class OrderService {
 	private final OrderRepository orderRepository;
 	private final CustomerService customerService;
 
-	public Order createAdditionalOrder(OrderDto.CreateAdditionalOrderDto dto) {
-		//TODO : 실제 Customer 클래스로 수정 필요
-		Customer customer = new Customer();
+	@Transactional
+	public void createAdditionalOrder(OrderDto.CreateAdditionalOrderDto dto) {
+
+		Customer customer = customerService.findCustomerById(dto.customerId());
 
 		List<OrderLine> orderLines = dto.orderLines().stream()
 				.map(orderLineDto -> {
@@ -35,7 +36,7 @@ public class OrderService {
 
 		Order order = Order.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
 
-		return orderRepository.save(order);
+		orderRepository.save(order);
 	}
 
 
@@ -53,11 +54,10 @@ public class OrderService {
 					return new OrderLine(product, orderLineDto.quantity());
 				})
 				.collect(Collectors.toList());
-//
 		Order order = Order.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
 
-		return orderRepository.save(order);
-//	}
+		orderRepository.save(order);
+		return order;
 	}
 
 

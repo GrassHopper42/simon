@@ -18,4 +18,8 @@ public class CustomerService {
 		Customer customer = Customer.createCustomer(dto.name(), dto.contact(), dto.companyName(), dto.companyAddress(), dto.companyRepresentative());
 		return customerRepository.save(customer);
 	}
+
+	public Customer findCustomerById(Long customerId) {
+		return customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("customer not found"));
+	}
 }

@@ -33,7 +33,6 @@ public class Order {
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<OrderLine> orderLines;
 
-	// TODO : 실제 Customer 클래스로 수정 필요
 	@ManyToOne()
 	private Customer customer;
 
@@ -41,7 +40,7 @@ public class Order {
 	}
 
 
-	static public Order createOrder(List<OrderLine> orderLines, Customer customer, OrderStatus orderStatus, String memo) {
+	public static Order createOrder(List<OrderLine> orderLines, Customer customer, OrderStatus orderStatus, String memo) {
 		return new Order(orderLines, customer, memo, orderStatus);
 	}
 

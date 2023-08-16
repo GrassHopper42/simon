@@ -23,4 +23,9 @@ public class OrderController {
 		return ResponseEntity.ok(orderService.createFirstOrder(createFirstOrderDto));
 	}
 
+	@PostMapping("/additional")
+	public ResponseEntity<Order> createAdditionalOrder(@Valid @RequestBody() OrderDto.CreateAdditionalOrderDto dto) {
+		orderService.createAdditionalOrder(dto);
+		return ResponseEntity.ok(null);
+	}
 }
