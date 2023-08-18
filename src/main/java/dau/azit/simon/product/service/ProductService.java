@@ -23,28 +23,19 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public Product getProductByCode(String code) {
-        return productRepository.findByCode(code).orElseThrow();
-    }
-
-    public List<Product> findByName(String name) {
-        return productRepository.findAllByNameContainsIgnoreCase(name);
-    }
-
-    public void searchProduct(String code, String name, String comment) {
-        // TODO : 상품 검색 기능
+    public List<Product> searchProduct(String code, String name, String comment) {
+        return productRepository.findAllByCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndCommentContainingIgnoreCase(code, name, comment);
     }
 
     @Transactional
     public void updateProduct(ProductId id, UpdateProductDto dto) {
         Product product = productRepository.findById(id).orElseThrow();
         if (!dto.location().isBlank()) product.setLocation(dto.location());
-        if (!dto.comment().isBlank()) product.changeComment(dto.comment());
+        if (!dto.comment().isBlank()) product.changeDescription(dto.comment());
     }
 
     public void removeProduct(ProductId id) {
-        // TODO : Soft delete
         Product product = productRepository.findById(id).orElseThrow();
-        productRepository.delete(product);
+        product.delete();
     }
 }

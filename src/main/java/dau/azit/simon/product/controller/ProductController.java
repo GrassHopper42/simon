@@ -1,11 +1,15 @@
 package dau.azit.simon.product.controller;
 
+import dau.azit.simon.product.domain.Product;
 import dau.azit.simon.product.domain.ProductId;
 import dau.azit.simon.product.dto.CreateProductDto;
 import dau.azit.simon.product.dto.UpdateProductDto;
 import dau.azit.simon.product.service.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController("/api/product")
 public class ProductController {
@@ -13,6 +17,11 @@ public class ProductController {
 
     public ProductController(ProductService productService) {
         this.productService = productService;
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProduct(@RequestParam(defaultValue = "") String code, @RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String comment){
+        return ResponseEntity.ok(this.productService.searchProduct(code, name, comment));
     }
 
     @PostMapping
@@ -27,7 +36,6 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable ProductId id) {
-        // TODO : Exception Handling
         this.productService.removeProduct(id);
     }
 }
