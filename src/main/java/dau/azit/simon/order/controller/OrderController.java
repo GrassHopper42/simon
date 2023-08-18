@@ -1,7 +1,7 @@
 package dau.azit.simon.order.controller;
 
 
-import dau.azit.simon.order.domain.Order;
+import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.dto.OrderDto;
 import dau.azit.simon.order.service.OrderService;
 import jakarta.validation.Valid;
@@ -19,12 +19,12 @@ public class OrderController {
 	private final OrderService orderService;
 
 	@PostMapping("/first")
-	public ResponseEntity<Order> createFirstOrder(@Valid @RequestBody() OrderDto.CreateFirstOrderDto createFirstOrderDto) {
+	public ResponseEntity<SalesOrder> createFirstOrder(@Valid @RequestBody() OrderDto.CreateFirstOrderDto createFirstOrderDto) {
 		return ResponseEntity.ok(orderService.createFirstOrder(createFirstOrderDto));
 	}
 
 	@PostMapping("/additional")
-	public ResponseEntity<Order> createAdditionalOrder(@Valid @RequestBody() OrderDto.CreateAdditionalOrderDto dto) {
+	public ResponseEntity<SalesOrder> createAdditionalOrder(@Valid @RequestBody() OrderDto.CreateAdditionalOrderDto dto) {
 		orderService.createAdditionalOrder(dto);
 		return ResponseEntity.ok(null);
 	}

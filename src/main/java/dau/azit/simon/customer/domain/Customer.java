@@ -1,6 +1,6 @@
 package dau.azit.simon.customer.domain;
 
-import dau.azit.simon.order.domain.Order;
+import dau.azit.simon.order.domain.SalesOrder;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter()
-@Entity(name = "customers")
+@Entity(name = "customer")
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Customer {
 
 	@OneToMany()
 	@Column(nullable = false)
-	List<Order> orders;
+	List<SalesOrder> orders;
 
 	String companyRepresentative;
 

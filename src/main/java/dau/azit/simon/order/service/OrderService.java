@@ -2,7 +2,7 @@ package dau.azit.simon.order.service;
 
 import dau.azit.simon.customer.domain.Customer;
 import dau.azit.simon.customer.service.CustomerService;
-import dau.azit.simon.order.domain.Order;
+import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.domain.OrderLine;
 import dau.azit.simon.order.domain.mock.Product;
 import dau.azit.simon.order.dto.OrderDto;
@@ -34,14 +34,14 @@ public class OrderService {
 				})
 				.collect(Collectors.toList());
 
-		Order order = Order.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
+		SalesOrder order = SalesOrder.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
 
 		orderRepository.save(order);
 	}
 
 
 	@Transactional
-	public Order createFirstOrder(OrderDto.CreateFirstOrderDto dto) {
+	public SalesOrder createFirstOrder(OrderDto.CreateFirstOrderDto dto) {
 		if (dto.customer() == null || dto.orderLines() == null) {
 			throw new IllegalArgumentException("customer or orderLines is null");
 		}
@@ -54,7 +54,7 @@ public class OrderService {
 					return new OrderLine(product, orderLineDto.quantity());
 				})
 				.collect(Collectors.toList());
-		Order order = Order.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
+		SalesOrder order = SalesOrder.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
 
 		orderRepository.save(order);
 		return order;

@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "sales_order")
 @Getter
-public class Order {
+public class SalesOrder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -36,16 +36,16 @@ public class Order {
 	@ManyToOne()
 	private Customer customer;
 
-	public Order() {
+	public SalesOrder() {
 	}
 
 
-	public static Order createOrder(List<OrderLine> orderLines, Customer customer, OrderStatus orderStatus, String memo) {
-		return new Order(orderLines, customer, memo, orderStatus);
+	public static SalesOrder createOrder(List<OrderLine> orderLines, Customer customer, OrderStatus orderStatus, String memo) {
+		return new SalesOrder(orderLines, customer, memo, orderStatus);
 	}
 
 
-	private Order(List<OrderLine> orderLines, Customer customer, String memo, OrderStatus status) {
+	private SalesOrder(List<OrderLine> orderLines, Customer customer, String memo, OrderStatus status) {
 		this.uid = UUID.randomUUID();
 		this.orderDate = new Date();
 		this.memo = memo;
