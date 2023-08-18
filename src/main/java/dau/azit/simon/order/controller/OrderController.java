@@ -17,12 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/orders")
 public class OrderController {
 	private final OrderService orderService;
-
-	@PostMapping("/first")
-	public ResponseEntity<SalesOrder> createFirstOrder(@Valid @RequestBody() OrderDto.CreateFirstOrderDto createFirstOrderDto) {
-		return ResponseEntity.ok(orderService.createFirstOrder(createFirstOrderDto));
-	}
-
+	
 	@PostMapping("/additional")
 	public ResponseEntity<SalesOrder> createAdditionalOrder(@Valid @RequestBody() OrderDto.CreateAdditionalOrderDto dto) {
 		orderService.createAdditionalOrder(dto);

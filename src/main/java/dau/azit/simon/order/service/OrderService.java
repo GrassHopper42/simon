@@ -38,27 +38,5 @@ public class OrderService {
 
 		orderRepository.save(order);
 	}
-
-
-	@Transactional
-	public SalesOrder createFirstOrder(OrderDto.CreateFirstOrderDto dto) {
-		if (dto.customer() == null || dto.orderLines() == null) {
-			throw new IllegalArgumentException("customer or orderLines is null");
-		}
-
-		Customer customer = customerService.createCustomer(dto.customer());
-		List<OrderLine> orderLines = dto.orderLines().stream()
-				.map(orderLineDto -> {
-					//TODO : 실제 Product 클래스로 수정 필요
-					Product product = new Product();
-					return new OrderLine(product, orderLineDto.quantity());
-				})
-				.collect(Collectors.toList());
-		SalesOrder order = SalesOrder.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
-
-		orderRepository.save(order);
-		return order;
-	}
-
-
+	
 }
