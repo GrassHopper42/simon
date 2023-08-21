@@ -3,6 +3,7 @@ package dau.azit.simon.product.controller;
 import dau.azit.simon.product.domain.Product;
 import dau.azit.simon.product.domain.ProductId;
 import dau.azit.simon.product.dto.CreateProductDto;
+import dau.azit.simon.product.dto.SearchProductDto;
 import dau.azit.simon.product.dto.UpdateProductDto;
 import dau.azit.simon.product.service.ProductService;
 import jakarta.validation.Valid;
@@ -20,7 +21,10 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Product>> searchProduct(@RequestParam(defaultValue = "") String code, @RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String comment){
+    public ResponseEntity<List<Product>> searchProduct(SearchProductDto dto){
+        String code = dto.code() == null ? "" : dto.code();
+        String name = dto.name() == null ? "" : dto.name();
+        String comment = dto.comment() == null ? "" : dto.comment();
         return ResponseEntity.ok(this.productService.searchProduct(code, name, comment));
     }
 
