@@ -17,7 +17,8 @@ public class OrderLine {
 	@Column(nullable = false)
 	private UUID uid;
 
-	@OneToOne()
+	//TODO : 이후에 실제 Product 객체로 변경하면 cascade 부분 삭제 필요
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Product product;
 
 	@Column(nullable = false)
