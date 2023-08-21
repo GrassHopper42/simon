@@ -1,6 +1,10 @@
 package dau.azit.simon.product.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Product {
@@ -10,10 +14,12 @@ public class Product {
     private String code;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "comment")
-    private String comment;
+    @Column(name = "description")
+    private String description;
     @Column(name = "location")
     private String location;
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
 
     public Product() {}
 
@@ -26,15 +32,19 @@ public class Product {
         this.id = id;
         this.code = code;
         this.name = name;
-        this.comment = comment;
+        this.description = comment;
         this.location = location;
     }
 
-    public void changeComment(String comment) {
-        this.comment = comment;
+    public void changeDescription(String comment) {
+        this.description = comment;
     }
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void delete() {
+        this.deletedAt = LocalDateTime.now();
     }
 }
