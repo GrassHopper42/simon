@@ -1,6 +1,6 @@
 package dau.azit.simon.order.domain;
 
-import dau.azit.simon.order.domain.mock.Product;
+import dau.azit.simon.product.domain.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -17,8 +17,7 @@ public class OrderLine {
 	@Column(nullable = false)
 	private UUID uid;
 
-	//TODO : 이후에 실제 Product 객체로 변경하면 cascade 부분 삭제 필요
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne
 	private Product product;
 
 	@Column(nullable = false)
@@ -32,8 +31,7 @@ public class OrderLine {
 		this.product = product;
 		this.quantity = quantity;
 
-		// TODO : 실제 Product 클래스로 수정 필요
-		this.salesPrice = this.product.getPrice() * quantity;
+		// TODO : 가격 기능 추가 필요
 	}
 
 	public OrderLine() {
