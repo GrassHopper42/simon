@@ -1,5 +1,7 @@
 package dau.azit.simon.product.service;
 
+import dau.azit.simon.product.domain.Location;
+import dau.azit.simon.product.domain.Money;
 import dau.azit.simon.product.domain.Product;
 import dau.azit.simon.product.domain.ProductId;
 import dau.azit.simon.product.dto.CreateProductDto;
@@ -30,8 +32,12 @@ public class ProductService {
     @Transactional
     public void updateProduct(ProductId id, UpdateProductDto dto) {
         Product product = productRepository.findById(id).orElseThrow();
-        if (!dto.location().isBlank()) product.setLocation(dto.location());
-        if (!dto.comment().isBlank()) product.changeDescription(dto.comment());
+        if (!dto.name().isBlank()) product.changeName(dto.name());
+        if (!dto.location().isBlank()) product.stock(new Location(dto.location()));
+        if (!dto.description().isBlank()) product.changeDescription(dto.description());
+        if (dto.price() != null && dto.price() >= 0) {
+            product.fixPrice(new Money(dto.price()));
+        }
     }
 
     public void removeProduct(ProductId id) {
