@@ -8,8 +8,8 @@ import java.util.UUID;
 
 @Entity
 @Getter
-@Table(name = "orderLines")
-public class OrderLine {
+@Table(name = "sales_order_line")
+public class SalesOrderLine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -26,7 +26,7 @@ public class OrderLine {
 	@Column(nullable = false)
 	int salesPrice;
 
-	public OrderLine(Product product, int quantity) {
+	public SalesOrderLine(Product product, int quantity) {
 		this.uid = UUID.randomUUID();
 		this.product = product;
 		this.quantity = quantity;
@@ -34,6 +34,6 @@ public class OrderLine {
 		// TODO : 가격 기능 추가 필요
 	}
 
-	public OrderLine() {
+	public SalesOrderLine() {
 	}
 }

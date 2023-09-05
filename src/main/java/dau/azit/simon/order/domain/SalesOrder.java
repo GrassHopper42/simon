@@ -31,7 +31,7 @@ public class SalesOrder {
 	private OrderStatus status;
 
 	@OneToMany(cascade = CascadeType.PERSIST)
-	private List<OrderLine> orderLines;
+	private List<SalesOrderLine> orderLines;
 
 	@ManyToOne()
 	private Customer customer;
@@ -40,18 +40,18 @@ public class SalesOrder {
 	}
 
 
-	public static SalesOrder createOrder(List<OrderLine> orderLines, Customer customer, OrderStatus orderStatus, String memo) {
+	public static SalesOrder createOrder(List<SalesOrderLine> orderLines, Customer customer, OrderStatus orderStatus, String memo) {
 		return new SalesOrder(orderLines, customer, memo, orderStatus);
 	}
 
 
-	private SalesOrder(List<OrderLine> orderLines, Customer customer, String memo, OrderStatus status) {
+	private SalesOrder(List<SalesOrderLine> orderLines, Customer customer, String memo, OrderStatus status) {
 		this.uid = UUID.randomUUID();
 		this.orderDate = new Date();
 		this.memo = memo;
 		this.orderLines = orderLines;
 		this.customer = customer;
-		this.totalPrice = orderLines.stream().mapToLong(OrderLine::getSalesPrice).sum();
+		this.totalPrice = orderLines.stream().mapToLong(SalesOrderLine::getSalesPrice).sum();
 		this.status = status;
 	}
 
