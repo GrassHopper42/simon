@@ -26,10 +26,14 @@ public class SalesOrderLine {
 	@Column(nullable = false)
 	int salesPrice;
 
-	public SalesOrderLine(Product product, int quantity) {
+	@Column(nullable = false)
+	String publicProductName;
+
+	public SalesOrderLine(Product product, int quantity, String publicProductName) {
 		this.uid = UUID.randomUUID();
 		this.product = product;
 		this.quantity = quantity;
+		this.publicProductName = publicProductName;
 
 		// TODO : 가격 기능 추가 필요
 	}

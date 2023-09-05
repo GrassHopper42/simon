@@ -4,7 +4,7 @@ import dau.azit.simon.customer.domain.Customer;
 import dau.azit.simon.customer.service.CustomerService;
 import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.domain.SalesOrderLine;
-import dau.azit.simon.order.dto.request.OrderDto;
+import dau.azit.simon.order.dto.request.CreateSalesOrderDto;
 import dau.azit.simon.order.repository.OrderRepository;
 import dau.azit.simon.product.domain.Product;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +22,14 @@ public class SalesOrderService {
 	private final CustomerService customerService;
 
 	@Transactional
-	public void createAdditionalOrder(OrderDto.CreateAdditionalOrderDto dto) {
+	public void createSalesOrder(CreateSalesOrderDto dto) {
 
 		Customer customer = customerService.findCustomerById(dto.customerId());
-
-		List<SalesOrderLine> orderLines = dto.orderLines().stream()
-				.map(orderLineDto -> {
+		List<SalesOrderLine> orderLines = dto.salesOrderLines().stream()
+				.map(salesOrderLine -> {
 					//TODO : 실제 Product 클래스로 수정 필요
 					Product product = new Product();
-					return new SalesOrderLine(product, orderLineDto.quantity());
+					return new SalesOrderLine(product, salesOrderLine.quantity(), salesOrderLine.publicProductName());
 				})
 				.collect(Collectors.toList());
 
