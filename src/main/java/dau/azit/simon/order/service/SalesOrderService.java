@@ -4,7 +4,7 @@ import dau.azit.simon.customer.domain.Customer;
 import dau.azit.simon.customer.service.CustomerService;
 import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.domain.OrderLine;
-import dau.azit.simon.order.dto.OrderDto;
+import dau.azit.simon.order.dto.request.OrderDto;
 import dau.azit.simon.order.repository.OrderRepository;
 import dau.azit.simon.product.domain.Product;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class OrderService {
+public class SalesOrderService {
 	private final OrderRepository orderRepository;
 	private final CustomerService customerService;
 
@@ -38,5 +38,5 @@ public class OrderService {
 
 		orderRepository.save(order);
 	}
-	
+
 }
