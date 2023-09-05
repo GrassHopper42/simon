@@ -26,7 +26,7 @@ public class ProductService {
     }
 
     public List<Product> searchProduct(String code, String name, String comment) {
-        return productRepository.findAllByCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndCommentContainingIgnoreCase(code, name, comment);
+        return productRepository.findAllByCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndDescriptionContainingIgnoreCase(code, name, comment);
     }
 
     @Transactional
