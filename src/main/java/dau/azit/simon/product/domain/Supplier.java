@@ -6,9 +6,8 @@ import java.util.List;
 
 @Entity()
 public class Supplier {
-    @Id
-    @GeneratedValue
-    private Long id;
+    @EmbeddedId
+    private SupplierId id;
 
     @Column(name = "name", unique = true)
     private String name;
@@ -16,7 +15,7 @@ public class Supplier {
     @Column(name = "contact")
     private String contact;
 
-    @OneToMany
+    @OneToMany(mappedBy = "supplier")
     private List<ProductSupply> supplyItems;
 
     public Supplier() {}
@@ -25,10 +24,9 @@ public class Supplier {
         this.name = name;
     }
 
-    public Supplier(Long id, String name, String contact, List<ProductSupply> supplyItems) {
+    public Supplier(SupplierId id, String name, String contact, List<ProductSupply> supplyItems) {
         this.id = id;
         this.name = name;
         this.contact = contact;
-        this.supplyItems = supplyItems;
     }
 }

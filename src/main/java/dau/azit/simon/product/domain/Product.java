@@ -24,7 +24,7 @@ public class Product {
     private Location location;
     @Column(name = "deleted_at", nullable = true)
     private LocalDateTime deletedAt;
-    @OneToMany
+    @OneToMany(mappedBy = "product")
     private List<ProductSupply> supplies;
 
     public Product() {}
