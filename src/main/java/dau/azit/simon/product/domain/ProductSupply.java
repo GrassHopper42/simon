@@ -3,6 +3,7 @@ package dau.azit.simon.product.domain;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "product_supply")
 public class ProductSupply {
     @EmbeddedId
     private ProductSupplyKey id;
