@@ -12,8 +12,4 @@ public class Money {
         if (amount < 0) throw new IllegalArgumentException();
         this.amount = amount;
     }
-
-    public Money add(Money money) {
-        return new Money(money.amount + this.amount);
-    }
 }
