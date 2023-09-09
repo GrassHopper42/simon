@@ -1,10 +1,12 @@
 package dau.azit.simon.product.service;
 
+import dau.azit.simon.product.domain.Location;
+import dau.azit.simon.product.domain.Money;
 import dau.azit.simon.product.domain.Product;
 import dau.azit.simon.product.domain.ProductId;
 import dau.azit.simon.product.dto.CreateProductDto;
 import dau.azit.simon.product.dto.UpdateProductDto;
-import dau.azit.simon.product.repository.ProductJpaRepository;
+import dau.azit.simon.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,9 @@ import java.util.List;
 
 @Service
 public class ProductService {
-    private final ProductJpaRepository productRepository;
+    private final ProductRepository productRepository;
 
-    public ProductService(ProductJpaRepository productRepository) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -24,14 +26,18 @@ public class ProductService {
     }
 
     public List<Product> searchProduct(String code, String name, String comment) {
-        return productRepository.findAllByCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndCommentContainingIgnoreCase(code, name, comment);
+        return productRepository.searchProduct(code, name, comment);
     }
 
     @Transactional
     public void updateProduct(ProductId id, UpdateProductDto dto) {
         Product product = productRepository.findById(id).orElseThrow();
-        if (!dto.location().isBlank()) product.setLocation(dto.location());
-        if (!dto.comment().isBlank()) product.changeDescription(dto.comment());
+        if (!dto.name().isBlank()) product.changeName(dto.name());
+        if (!dto.location().isBlank()) product.stock(new Location(dto.location()));
+        if (!dto.description().isBlank()) product.changeDescription(dto.description());
+        if (dto.price() != null && dto.price() >= 0) {
+            product.fixPrice(new Money(dto.price()));
+        }
     }
 
     public void removeProduct(ProductId id) {

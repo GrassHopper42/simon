@@ -7,22 +7,23 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class ProductId implements Serializable {
+public class SupplierId implements Serializable {
     @GeneratedValue
     private Long id;
 
-    public ProductId() {}
+    public SupplierId() {
+    }
 
-    public ProductId(Long id) {
+    public SupplierId(Long id) {
         this.id = id;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProductId productId)) return false;
+        if (!(o instanceof SupplierId that)) return false;
 
-        return Objects.equals(id, productId.id);
+        return Objects.equals(id, that.id);
     }
 
     @Override
