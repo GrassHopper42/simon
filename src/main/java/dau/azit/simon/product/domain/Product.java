@@ -1,7 +1,6 @@
 package dau.azit.simon.product.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,12 +9,11 @@ import java.util.List;
 public class Product {
     @EmbeddedId
     private ProductId id;
-
-    @Getter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
     @Column(name = "code", unique = true, length = 15)
     private String code;
-
-    @Getter
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "standard")
@@ -27,15 +25,16 @@ public class Product {
     private Money price;
     @Embedded
     private Location location;
-    @Column(name = "deleted_at", nullable = true)
+    @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
     @OneToMany(mappedBy = "product")
     private List<ProductSupply> supplies;
 
     public Product() {}
 
-    public Product(String code, String name) {
+    public Product(String code, Category category, String name) {
         this.code = code;
+        this.category = category;
         this.name = name;
     }
 
@@ -47,6 +46,10 @@ public class Product {
         this.description = description;
         this.price = price;
         this.location = location;
+    }
+
+    public void changeCategory(Category newCategory) {
+        this.category = newCategory;
     }
 
     public void changeName(String name) {
@@ -61,7 +64,7 @@ public class Product {
         this.price = price;
     }
 
-    public void stock(Location location) {
+    public void updateLocation(Location location) {
         this.location = location;
     }
 
