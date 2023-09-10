@@ -34,13 +34,12 @@ public class SalesOrderLine {
 	@JoinColumn(name = "sales_order_id")
 	private SalesOrder salesOrder;
 
-	public SalesOrderLine(Product product, int quantity, String publicProductName) {
+	public SalesOrderLine(Product product, int quantity, String publicProductName, int salesPrice) {
 		this.uid = UUID.randomUUID();
 		this.product = product;
 		this.quantity = quantity;
 		this.publicProductName = publicProductName;
-
-		// TODO : 가격 기능 추가 필요
+		this.salesPrice = salesPrice;
 	}
 
 	public void setSalesOrder(SalesOrder salesOrder) {
@@ -48,5 +47,9 @@ public class SalesOrderLine {
 	}
 
 	public SalesOrderLine() {
+	}
+
+	public int getTotalSalesPrice() {
+		return salesPrice * quantity;
 	}
 }

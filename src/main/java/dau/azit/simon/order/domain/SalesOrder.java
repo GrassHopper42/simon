@@ -55,7 +55,7 @@ public class SalesOrder {
 		this.orderDate = new Date();
 		this.memo = memo;
 		this.customer = customer;
-		this.totalPrice = orderLines.stream().mapToLong(SalesOrderLine::getSalesPrice).sum();
+		this.totalPrice = orderLines.stream().mapToLong(SalesOrderLine::getTotalSalesPrice).sum();
 		this.status = status;
 	}
 

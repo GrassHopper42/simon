@@ -30,7 +30,7 @@ public class SalesOrderService {
 		List<SalesOrderLine> orderLines = dto.salesOrderLines().stream()
 				.map(salesOrderLine -> {
 					Product product = productRepository.findByCode(salesOrderLine.productCode()).orElseThrow(() -> new IllegalArgumentException("product not found"));
-					return new SalesOrderLine(product, salesOrderLine.quantity(), salesOrderLine.publicProductName());
+					return new SalesOrderLine(product, salesOrderLine.quantity(), salesOrderLine.publicProductName(), salesOrderLine.salesPrice());
 				})
 				.collect(Collectors.toList());
 
