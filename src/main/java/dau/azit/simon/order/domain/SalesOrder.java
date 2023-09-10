@@ -60,11 +60,11 @@ public class SalesOrder {
 	}
 
 	public void cancel() {
-		this.status = OrderStatus.CANCEL;
+		this.status = OrderStatus.ORDER_CANCEL;
 	}
 
 	public void restore() {
-		this.status = OrderStatus.COMPLETE;
+		this.status = OrderStatus.ORDER_COMPLETE;
 	}
 
 }
