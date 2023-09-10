@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.2'
 	id 'io.spring.dependency-management' version '1.1.2'
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+	id 'jacoco'
 }
 
 group = 'dau.azit'
@@ -10,6 +10,10 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	sourceCompatibility = '17'
+}
+
+jacoco {
+	toolVersion = '0.8.10'
 }
 
 configurations {
@@ -34,6 +38,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	testImplementation "com.h2database:h2"
+
 	// QueryDSL 설정
 	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
@@ -42,30 +49,33 @@ dependencies {
 	// -- QueryDSL ---
 }
 
+jacocoTestReport {
+	def QDomains = []
+	for (qPattern in "*.QA".."*.QZ") {
+		QDomains.add(qPattern + "*")
+	}
+
+	reports {
+		xml.required = true
+		html.required = true
+		csv.required = false
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(
+				files(classDirectories.files.collect {
+					fileTree(dir: it, excludes: [
+					        "**/*Config*",
+							"**/*Dto*",
+							"**/*Request*",
+							"**/*Response*"
+					] + QDomains)
+				})
+		)
+	}
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-// Querydsl
-def generated = 'src/main/generated'
-
-querydsl {
-	jpa = true
-	querydslSourcesDir = generated
-}
-sourceSets {
-	main.java.srcDir generated
-}
-
-tasks.compileQuerydsl.dependsOn(clean)
-
-compileQuerydsl{
-	options.annotationProcessorPath = configurations.querydsl
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	querydsl.extendsFrom compileClasspath
+	finalizedBy jacocoTestReport
 }
