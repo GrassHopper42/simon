@@ -2,6 +2,7 @@ package dau.azit.simon.order.service;
 
 import dau.azit.simon.customer.domain.Customer;
 import dau.azit.simon.customer.service.CustomerService;
+import dau.azit.simon.order.domain.OrderStatus;
 import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.domain.SalesOrderLine;
 import dau.azit.simon.order.dto.request.CreateSalesOrderDto;
@@ -50,4 +51,9 @@ public class SalesOrderService {
 		orders.forEach(SalesOrder::restore);
 	}
 
+	@Transactional
+	public void changeOrderStatus(Long customerId, Long salesOrderId, OrderStatus orderStatus) {
+		SalesOrder order = orderRepository.findByCustomerIdAndId(customerId, salesOrderId).orElseThrow(() -> new IllegalArgumentException("order not found"));
+		order.changeStatus(orderStatus);
+	}
 }

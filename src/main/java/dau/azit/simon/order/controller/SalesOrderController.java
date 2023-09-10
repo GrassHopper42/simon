@@ -3,6 +3,7 @@ package dau.azit.simon.order.controller;
 
 import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.dto.request.CancelSalesOrdersDto;
+import dau.azit.simon.order.dto.request.ChangeOrderStatusDto;
 import dau.azit.simon.order.dto.request.CreateSalesOrderDto;
 import dau.azit.simon.order.dto.request.RestoreSalesOrdersDto;
 import dau.azit.simon.order.service.SalesOrderService;
@@ -32,6 +33,12 @@ public class SalesOrderController {
 	@PatchMapping("/restore")
 	public ResponseEntity<Void> restoreOrders(@Valid @RequestBody() RestoreSalesOrdersDto dto) {
 		salesOrderService.restoreSalesOrders(dto.customerId(), dto.salesOrderIds());
+		return ResponseEntity.ok(null);
+	}
+
+	@PatchMapping("/status")
+	public ResponseEntity<Void> changeOrderStatus(@Valid @RequestBody() ChangeOrderStatusDto dto) {
+		salesOrderService.changeOrderStatus(dto.customerId(), dto.salesOrderId(), dto.orderStatus());
 		return ResponseEntity.ok(null);
 	}
 

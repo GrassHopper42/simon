@@ -67,4 +67,7 @@ public class SalesOrder {
 		this.status = OrderStatus.ORDER_COMPLETE;
 	}
 
+	public void changeStatus(OrderStatus orderStatus) {
+		this.status = orderStatus;
+	}
 }
