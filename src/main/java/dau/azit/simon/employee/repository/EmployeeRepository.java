@@ -10,6 +10,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Optional<Employee> findByUid(UUID uid);
 
+    Optional<Employee> findByPhoneNumber(String phoneNumber);
+
     void deleteByUid(UUID uid);
 
 }

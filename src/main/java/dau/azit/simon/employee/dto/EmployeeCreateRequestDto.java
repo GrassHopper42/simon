@@ -1,10 +1,11 @@
 package dau.azit.simon.employee.dto;
 
-import lombok.Getter;
-
 public record EmployeeCreateRequestDto(
+        String role,
         String name,
         String address,
         String status,
-        String description
+        String description,
+        String phoneNumber,
+        String password
 ) {}
