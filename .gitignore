@@ -38,3 +38,6 @@ out/
 
 ### Application Properties ###
 src/main/resources/application-local.yml
+
+### Q Clasees ###
+src/main/generated/
