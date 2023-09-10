@@ -63,4 +63,8 @@ public class SalesOrder {
 		this.status = OrderStatus.CANCEL;
 	}
 
+	public void restore() {
+		this.status = OrderStatus.COMPLETE;
+	}
+
 }

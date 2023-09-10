@@ -1,7 +1,6 @@
 package dau.azit.simon.order.service;
 
 import dau.azit.simon.customer.domain.Customer;
-import dau.azit.simon.customer.dto.CustomerDto;
 import dau.azit.simon.customer.service.CustomerService;
 import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.domain.SalesOrderLine;
@@ -43,6 +42,12 @@ public class SalesOrderService {
 	public void cancelSalesOrders(Long customerId, List<Long> orderIds) {
 		List<SalesOrder> orders = orderRepository.findByCustomerIdAndIdIn(customerId, orderIds);
 		orders.forEach(SalesOrder::cancel);
+	}
+
+	@Transactional
+	public void restoreSalesOrders(Long customerId, List<Long> orderIds) {
+		List<SalesOrder> orders = orderRepository.findByCustomerIdAndIdIn(customerId, orderIds);
+		orders.forEach(SalesOrder::restore);
 	}
 
 }
