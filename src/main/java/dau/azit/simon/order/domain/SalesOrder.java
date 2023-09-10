@@ -59,4 +59,8 @@ public class SalesOrder {
 		this.status = status;
 	}
 
+	public void cancel() {
+		this.status = OrderStatus.CANCEL;
+	}
+
 }

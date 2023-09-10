@@ -8,9 +8,7 @@ import dau.azit.simon.order.domain.SalesOrderLine;
 import dau.azit.simon.order.dto.request.CreateSalesOrderDto;
 import dau.azit.simon.order.repository.OrderRepository;
 import dau.azit.simon.product.domain.Product;
-import dau.azit.simon.product.domain.ProductId;
 import dau.azit.simon.product.repository.ProductJpaRepository;
-import dau.azit.simon.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +37,12 @@ public class SalesOrderService {
 		SalesOrder order = SalesOrder.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
 
 		orderRepository.save(order);
+	}
+
+	@Transactional
+	public void cancelSalesOrders(Long customerId, List<Long> orderIds) {
+		List<SalesOrder> orders = orderRepository.findByCustomerIdAndIdIn(customerId, orderIds);
+		orders.forEach(SalesOrder::cancel);
 	}
 
 }
