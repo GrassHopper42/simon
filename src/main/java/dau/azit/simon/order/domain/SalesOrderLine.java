@@ -17,7 +17,8 @@ public class SalesOrderLine {
 	@Column(nullable = false)
 	private UUID uid;
 
-	@OneToOne
+	@ManyToOne()
+	@JoinColumn(name = "product_id")
 	private Product product;
 
 	@Column(nullable = false)
@@ -29,6 +30,10 @@ public class SalesOrderLine {
 	@Column(nullable = false)
 	String publicProductName;
 
+	@ManyToOne
+	@JoinColumn(name = "sales_order_id")
+	private SalesOrder salesOrder;
+
 	public SalesOrderLine(Product product, int quantity, String publicProductName) {
 		this.uid = UUID.randomUUID();
 		this.product = product;
@@ -36,6 +41,10 @@ public class SalesOrderLine {
 		this.publicProductName = publicProductName;
 
 		// TODO : 가격 기능 추가 필요
+	}
+
+	public void setSalesOrder(SalesOrder salesOrder) {
+		this.salesOrder = salesOrder;
 	}
 
 	public SalesOrderLine() {

@@ -1,12 +1,16 @@
 package dau.azit.simon.order.service;
 
 import dau.azit.simon.customer.domain.Customer;
+import dau.azit.simon.customer.dto.CustomerDto;
 import dau.azit.simon.customer.service.CustomerService;
 import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.domain.SalesOrderLine;
 import dau.azit.simon.order.dto.request.CreateSalesOrderDto;
 import dau.azit.simon.order.repository.OrderRepository;
 import dau.azit.simon.product.domain.Product;
+import dau.azit.simon.product.domain.ProductId;
+import dau.azit.simon.product.repository.ProductJpaRepository;
+import dau.azit.simon.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,15 +24,14 @@ import java.util.stream.Collectors;
 public class SalesOrderService {
 	private final OrderRepository orderRepository;
 	private final CustomerService customerService;
+	private final ProductJpaRepository productRepository;
 
 	@Transactional
 	public void createSalesOrder(CreateSalesOrderDto dto) {
-
 		Customer customer = customerService.findCustomerById(dto.customerId());
 		List<SalesOrderLine> orderLines = dto.salesOrderLines().stream()
 				.map(salesOrderLine -> {
-					//TODO : 실제 Product 클래스로 수정 필요
-					Product product = new Product();
+					Product product = productRepository.findByCode(salesOrderLine.productCode()).orElseThrow(() -> new IllegalArgumentException("product not found"));
 					return new SalesOrderLine(product, salesOrderLine.quantity(), salesOrderLine.publicProductName());
 				})
 				.collect(Collectors.toList());
