@@ -4,7 +4,6 @@ public record EmployeeCreateRequestDto(
         String role,
         String name,
         String address,
-        String status,
         String description,
         String phoneNumber,
         String password
