@@ -48,22 +48,23 @@ public class EmployeeService {
     }
 
     @Transactional
-    public Employee addOne(EmployeeCreateRequestDto dto) {
-        return employeeRepository.save(new Employee(
+    public Employee register(EmployeeCreateRequestDto dto) {
+        String encodedPassword = passwordEncoder.encode(dto.password());
+        Employee employee = new Employee(
                 UserRole.valueOf(dto.role()),
                 dto.name(),
                 dto.address(),
-                dto.status(),
                 dto.description(),
                 dto.phoneNumber(),
-                passwordEncoder.encode(dto.password())
-        ));
+                encodedPassword
+        );
+        return employeeRepository.save(employee);
     }
 
     @Transactional
     public Employee modifyOne(UUID uid, EmployeeUpdateRequestDto dto) {
         Employee employee = findOneByUid(uid);
-        employee.updateField(dto);
+        employee.updateField(dto.name(), dto.address(), dto.description());
         return employee;
     }
 

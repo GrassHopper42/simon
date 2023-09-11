@@ -18,7 +18,7 @@ public class Init {
     @PostConstruct
     public void init() {
         employeeRepository.save(new Employee(
-                UserRole.ADMIN, "admin", null, null, null,
+                UserRole.ADMIN, "admin", null, null,
                 "admin", passwordEncoder.encode("admin"))
         );
     }

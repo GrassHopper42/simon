@@ -8,7 +8,6 @@ import dau.azit.simon.employee.entity.Employee;
 import dau.azit.simon.employee.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -38,8 +37,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> employeeAdd(@RequestBody EmployeeCreateRequestDto dto) {
-        Employee employee = employeeService.addOne(dto);
+    public ResponseEntity<Employee> employeeRegister(@RequestBody EmployeeCreateRequestDto dto) {
+        Employee employee = employeeService.register(dto);
         String currentUri = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
         return ResponseEntity.created(URI.create(currentUri + "/" + employee.getUid())).body(employee);
     }
