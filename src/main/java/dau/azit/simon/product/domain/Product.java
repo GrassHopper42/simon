@@ -1,6 +1,7 @@
 package dau.azit.simon.product.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,8 +10,12 @@ import java.util.List;
 public class Product {
     @EmbeddedId
     private ProductId id;
+
+    @Getter
     @Column(name = "code", unique = true, length = 15)
     private String code;
+
+    @Getter
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "standard")
