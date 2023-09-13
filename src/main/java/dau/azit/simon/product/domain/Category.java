@@ -45,7 +45,7 @@ public class Category {
         childCategories.add(new Category(name));
     }
 
-    public Boolean hasProduct() {
+    public boolean hasProduct() {
         return !this.products.isEmpty();
     }
 }

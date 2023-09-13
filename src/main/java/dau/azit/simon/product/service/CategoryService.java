@@ -33,8 +33,7 @@ public class CategoryService {
 
     public void removeCategory(Long categoryId) {
         Category targetCategory = this.categoryRepository.getReferenceById(categoryId);
-        Boolean hasProducts = targetCategory.hasProduct();
-        if (Boolean.TRUE.equals(hasProducts)) throw new IllegalArgumentException();
+        if (targetCategory.hasProduct()) throw new IllegalArgumentException();
         this.categoryRepository.delete(targetCategory);
     }
 }
