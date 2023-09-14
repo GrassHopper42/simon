@@ -1,11 +1,9 @@
 package dau.azit.simon.product.service;
 
-import dau.azit.simon.product.domain.Location;
-import dau.azit.simon.product.domain.Money;
-import dau.azit.simon.product.domain.Product;
-import dau.azit.simon.product.domain.ProductId;
+import dau.azit.simon.product.domain.*;
 import dau.azit.simon.product.dto.CreateProductDto;
 import dau.azit.simon.product.dto.UpdateProductDto;
+import dau.azit.simon.product.repository.CategoryRepository;
 import dau.azit.simon.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -15,13 +13,16 @@ import java.util.List;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public void registerProduct(CreateProductDto dto) {
-        Product product = new Product(dto.code(), dto.name());
+        Category category = this.categoryRepository.getReferenceById(dto.categoryId());
+        Product product = new Product(dto.code(), category, dto.name());
         productRepository.save(product);
     }
 
@@ -33,11 +34,17 @@ public class ProductService {
     public void updateProduct(ProductId id, UpdateProductDto dto) {
         Product product = productRepository.findById(id).orElseThrow();
         if (!dto.name().isBlank()) product.changeName(dto.name());
-        if (!dto.location().isBlank()) product.stock(new Location(dto.location()));
+        if (!dto.location().isBlank()) product.updateLocation(new Location(dto.location()));
         if (!dto.description().isBlank()) product.changeDescription(dto.description());
         if (dto.price() != null && dto.price() >= 0) {
             product.fixPrice(new Money(dto.price()));
         }
+    }
+
+    public void changeCategory(ProductId id, Long categoryId) {
+        Category category = this.categoryRepository.getReferenceById(categoryId);
+        Product product = this.productRepository.findById(id).orElseThrow();
+        product.changeCategory(category);
     }
 
     public void removeProduct(ProductId id) {
