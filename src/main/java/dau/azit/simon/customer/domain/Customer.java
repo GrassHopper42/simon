@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.List;
 import java.util.UUID;
 
-@Getter()
+@Getter
 @Entity(name = "customer")
 public class Customer {
 	@Id
@@ -27,7 +27,7 @@ public class Customer {
 	@Column(nullable = false)
 	String contact;
 
-	@OneToMany()
+	@OneToMany
 	@Column(nullable = false)
 	List<SalesOrder> orders;
 

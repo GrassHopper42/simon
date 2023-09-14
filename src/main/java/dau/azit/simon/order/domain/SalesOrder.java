@@ -33,7 +33,7 @@ public class SalesOrder {
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "salesOrder")
 	private List<SalesOrderLine> orderLines;
 
-	@ManyToOne()
+	@ManyToOne
 	private Customer customer;
 
 	public SalesOrder() {

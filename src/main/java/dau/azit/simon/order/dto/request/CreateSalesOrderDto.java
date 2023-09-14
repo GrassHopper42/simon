@@ -15,7 +15,7 @@ public record CreateSalesOrderDto(
 
 		Optional<String> memo,
 
-		@NonNull()
+		@NonNull
 		OrderStatus orderStatus
 ) {
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class SalesOrderController {
 	private final SalesOrderService salesOrderService;
 
-	@PostMapping()
+	@PostMapping
 	public ResponseEntity<SalesOrder> createOrder(@Valid @RequestBody() CreateSalesOrderDto dto) {
 		salesOrderService.createSalesOrder(dto);
 		return ResponseEntity.ok(null);
