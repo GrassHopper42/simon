@@ -1,6 +1,6 @@
 package dau.azit.simon.order.domain;
 
-import dau.azit.simon.product.domain.Product;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -17,9 +17,8 @@ public class SalesOrderLine {
 	@Column(nullable = false)
 	private UUID uid;
 
-	@ManyToOne()
-	@JoinColumn(name = "product_id")
-	private Product product;
+	@Column(nullable = false)
+	private String productCode;
 
 	@Column(nullable = false)
 	int quantity;
@@ -34,9 +33,9 @@ public class SalesOrderLine {
 	@JoinColumn(name = "sales_order_id")
 	private SalesOrder salesOrder;
 
-	public SalesOrderLine(Product product, int quantity, String publicProductName, int salesPrice) {
+	public SalesOrderLine(String productCode, int quantity, String publicProductName, int salesPrice) {
 		this.uid = UUID.randomUUID();
-		this.product = product;
+		this.productCode = productCode;
 		this.quantity = quantity;
 		this.publicProductName = publicProductName;
 		this.salesPrice = salesPrice;

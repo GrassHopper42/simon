@@ -7,8 +7,6 @@ import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.domain.SalesOrderLine;
 import dau.azit.simon.order.dto.request.CreateSalesOrderDto;
 import dau.azit.simon.order.repository.OrderRepository;
-import dau.azit.simon.product.domain.Product;
-import dau.azit.simon.product.repository.ProductJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,16 +20,13 @@ import java.util.stream.Collectors;
 public class SalesOrderService {
 	private final OrderRepository orderRepository;
 	private final CustomerService customerService;
-	private final ProductJpaRepository productRepository;
 
 	@Transactional
 	public void createSalesOrder(CreateSalesOrderDto dto) {
 		Customer customer = customerService.findCustomerById(dto.customerId());
 		List<SalesOrderLine> orderLines = dto.salesOrderLines().stream()
-				.map(salesOrderLine -> {
-					Product product = productRepository.findByCode(salesOrderLine.productCode()).orElseThrow(() -> new IllegalArgumentException("product not found"));
-					return new SalesOrderLine(product, salesOrderLine.quantity(), salesOrderLine.publicProductName(), salesOrderLine.salesPrice());
-				})
+				.map(salesOrderLine ->
+					 new SalesOrderLine(salesOrderLine.productCode(), salesOrderLine.quantity(), salesOrderLine.publicProductName(), salesOrderLine.salesPrice()))
 				.collect(Collectors.toList());
 
 		SalesOrder order = SalesOrder.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
