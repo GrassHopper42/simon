@@ -1,4 +1,4 @@
 package dau.azit.simon.product.dto;
 
-public record CreateProductDto(String code, String name) {
+public record CreateProductDto(Long categoryId, String code, String name) {
 }

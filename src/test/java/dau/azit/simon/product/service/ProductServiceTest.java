@@ -1,8 +1,10 @@
 package dau.azit.simon.product.service;
 
+import dau.azit.simon.product.domain.Category;
 import dau.azit.simon.product.domain.Product;
 import dau.azit.simon.product.domain.ProductId;
 import dau.azit.simon.product.dto.CreateProductDto;
+import dau.azit.simon.product.repository.CategoryRepository;
 import dau.azit.simon.product.repository.ProductRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +22,8 @@ class ProductServiceTest {
     private ProductService service;
     @Mock
     private ProductRepository productRepository;
+    @Mock
+    private CategoryRepository categoryRepository;
 
 
     @Nested
@@ -31,12 +35,15 @@ class ProductServiceTest {
             // given
             String code = "test0001";
             String name = "test product";
-            CreateProductDto dto = new CreateProductDto(code, name);
+            CreateProductDto dto = new CreateProductDto(1L, code, name);
             Product product = new Product(new ProductId(1L), code, name, null, null, null, null);
 
             given(productRepository
                     .save(any(Product.class)))
                     .willReturn(product);
+            given(categoryRepository
+                    .getReferenceById(1L))
+                    .willReturn(new Category("test"));
 
             // when
             service.registerProduct(dto);

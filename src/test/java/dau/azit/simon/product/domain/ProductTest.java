@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class ProductTest {
 
+    Category category = new Category("test");
     @Nested
     @DisplayName("새 상품 생성")
     class CreateProduct {
@@ -19,7 +20,7 @@ class ProductTest {
             String name = "test product";
 
             // when
-            Product product = new Product(code, name);
+            Product product = new Product(code, category, name);
 
             // then
             assertThat(product.getCode()).isEqualTo(code);
@@ -34,7 +35,7 @@ class ProductTest {
         @DisplayName("이름을 second로 변경")
         void changeName() {
             // given
-            Product product = new Product("test", "first");
+            Product product = new Product("test", category, "first");
 
             // when
             product.changeName("second");
