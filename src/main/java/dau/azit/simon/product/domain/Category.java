@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.util.Set;
 
+@Getter
 @Entity
 @Table(
         name = "category",
@@ -16,12 +17,10 @@ import java.util.Set;
         }
 )
 public class Category {
-    @Getter
     @Id
     @GeneratedValue
     private Long id;
 
-    @Getter
     @Column
     private String name;
 

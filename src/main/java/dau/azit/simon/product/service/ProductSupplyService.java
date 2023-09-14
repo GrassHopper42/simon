@@ -23,12 +23,10 @@ public class ProductSupplyService {
     }
 
     public void supplyProduct(RegistSupplyDto dto) {
-        ProductId productId = new ProductId(dto.productId());
-        SupplierId supplierId = new SupplierId(dto.supplierId());
         Money price = new Money(dto.price());
 
         ProductSupply newSupply = new ProductSupply(
-                new ProductSupplyKey(productId, supplierId),
+                new ProductSupplyKey(dto.productId(), dto.supplierId()),
                 price,
                 dto.code(),
                 dto.memo()

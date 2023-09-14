@@ -1,7 +1,6 @@
 package dau.azit.simon.product.controller;
 
 import dau.azit.simon.product.domain.Product;
-import dau.azit.simon.product.domain.ProductId;
 import dau.azit.simon.product.dto.*;
 import dau.azit.simon.product.service.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -33,17 +32,17 @@ public class ProductController {
 
 
     @PutMapping("/{id}")
-    public void updateProduct(@PathVariable ProductId id, @RequestBody UpdateProductDto dto) {
+    public void updateProduct(@PathVariable Long id, @RequestBody UpdateProductDto dto) {
         this.productService.updateProduct(id, dto);
     }
 
     @PatchMapping("/{id}/category")
-    public void changeProductCategory(@PathVariable ProductId id, @RequestBody ChangeCategoryDto dto) {
+    public void changeProductCategory(@PathVariable Long id, @RequestBody ChangeCategoryDto dto) {
         this.productService.changeCategory(id, dto.categoryId());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable ProductId id) {
+    public void deleteProduct(@PathVariable Long id) {
         this.productService.removeProduct(id);
     }
 }

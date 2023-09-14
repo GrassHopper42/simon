@@ -1,13 +1,19 @@
 package dau.azit.simon.product.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity()
 public class Supplier {
-    @EmbeddedId
-    private SupplierId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "name", unique = true)
     private String name;
@@ -18,15 +24,7 @@ public class Supplier {
     @OneToMany(mappedBy = "supplier")
     private List<ProductSupply> supplyItems;
 
-    public Supplier() {}
-
     public Supplier(String name) {
         this.name = name;
-    }
-
-    public Supplier(SupplierId id, String name, String contact, List<ProductSupply> supplyItems) {
-        this.id = id;
-        this.name = name;
-        this.contact = contact;
     }
 }
