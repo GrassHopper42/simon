@@ -26,7 +26,7 @@ public class SalesOrderService {
 		Customer customer = customerService.findCustomerById(dto.customerId());
 		List<SalesOrderLine> orderLines = dto.salesOrderLines().stream()
 				.map(salesOrderLine ->
-					 new SalesOrderLine(salesOrderLine.productCode(), salesOrderLine.quantity(), salesOrderLine.publicProductName(), salesOrderLine.salesPrice()))
+					 new SalesOrderLine(salesOrderLine.productId(), salesOrderLine.quantity(), salesOrderLine.publicProductName(), salesOrderLine.salesPrice()))
 				.collect(Collectors.toList());
 
 		SalesOrder order = SalesOrder.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));

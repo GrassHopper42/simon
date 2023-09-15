@@ -18,7 +18,7 @@ public class SalesOrderLine {
 	private UUID uid;
 
 	@Column(nullable = false)
-	private String productCode;
+	private Long productId;
 
 	@Column(nullable = false)
 	int quantity;
@@ -33,9 +33,9 @@ public class SalesOrderLine {
 	@JoinColumn(name = "sales_order_id")
 	private SalesOrder salesOrder;
 
-	public SalesOrderLine(String productCode, int quantity, String publicProductName, int salesPrice) {
+	public SalesOrderLine(Long productId, int quantity, String publicProductName, int salesPrice) {
 		this.uid = UUID.randomUUID();
-		this.productCode = productCode;
+		this.productId = productId;
 		this.quantity = quantity;
 		this.publicProductName = publicProductName;
 		this.salesPrice = salesPrice;

@@ -1,7 +1,7 @@
 package dau.azit.simon.order.dto.request;
 
 public record CreateSalesOrderLineDto(
-		String productCode,
+		Long productId,
 
 		String publicProductName,
 
