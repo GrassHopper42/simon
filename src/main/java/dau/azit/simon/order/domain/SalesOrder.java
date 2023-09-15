@@ -30,29 +30,44 @@ public class SalesOrder {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
-	private List<OrderLine> orderLines;
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "salesOrder")
+	private List<SalesOrderLine> orderLines;
 
-	@ManyToOne()
+	@ManyToOne
 	private Customer customer;
 
 	public SalesOrder() {
 	}
 
 
-	public static SalesOrder createOrder(List<OrderLine> orderLines, Customer customer, OrderStatus orderStatus, String memo) {
+	public static SalesOrder createOrder(List<SalesOrderLine> orderLines, Customer customer, OrderStatus orderStatus, String memo) {
 		return new SalesOrder(orderLines, customer, memo, orderStatus);
 	}
 
+	private void setSalesOrderLines(List<SalesOrderLine> salesOrderLines) {
+		salesOrderLines.forEach(salesOrderLine -> salesOrderLine.setSalesOrder(this));
+		this.orderLines = salesOrderLines;
+	}
 
-	private SalesOrder(List<OrderLine> orderLines, Customer customer, String memo, OrderStatus status) {
+	private SalesOrder(List<SalesOrderLine> orderLines, Customer customer, String memo, OrderStatus status) {
+		setSalesOrderLines(orderLines);
 		this.uid = UUID.randomUUID();
 		this.orderDate = new Date();
 		this.memo = memo;
-		this.orderLines = orderLines;
 		this.customer = customer;
-		this.totalPrice = orderLines.stream().mapToLong(OrderLine::getSalesPrice).sum();
+		this.totalPrice = orderLines.stream().mapToLong(SalesOrderLine::getTotalSalesPrice).sum();
 		this.status = status;
 	}
 
+	public void cancel() {
+		this.status = OrderStatus.ORDER_CANCEL;
+	}
+
+	public void restore() {
+		this.status = OrderStatus.ORDER_COMPLETE;
+	}
+
+	public void changeStatus(OrderStatus orderStatus) {
+		this.status = orderStatus;
+	}
 }

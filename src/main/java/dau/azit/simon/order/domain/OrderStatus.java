@@ -1,6 +1,6 @@
 package dau.azit.simon.order.domain;
 
 public enum OrderStatus {
-	ESTIMATE, COMPLETE
+	ESTIMATION, ORDER_COMPLETE, ORDER_CANCEL, DELIVERY_START, DELIVERY_COMPLETE
 }
 
