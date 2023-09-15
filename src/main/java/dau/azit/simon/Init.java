@@ -1,7 +1,7 @@
 package dau.azit.simon;
 
-import dau.azit.simon.employee.entity.Employee;
-import dau.azit.simon.employee.entity.UserRole;
+import dau.azit.simon.employee.domain.Employee;
+import dau.azit.simon.employee.domain.UserRole;
 import dau.azit.simon.employee.repository.EmployeeRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

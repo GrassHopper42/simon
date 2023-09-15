@@ -1,7 +1,7 @@
 package dau.azit.simon.employee.filter;
 
 import dau.azit.simon.config.SimonConfigProperties;
-import dau.azit.simon.employee.entity.Employee;
+import dau.azit.simon.employee.domain.Employee;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
