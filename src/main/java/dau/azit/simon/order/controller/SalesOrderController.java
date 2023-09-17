@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/sales-orders")
+@RequestMapping("/api/orders")
 public class SalesOrderController {
 	private final SalesOrderService salesOrderService;
 
