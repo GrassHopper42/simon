@@ -4,7 +4,6 @@ import dau.azit.simon.order.domain.OrderStatus;
 import lombok.NonNull;
 
 import java.util.List;
-import java.util.Optional;
 
 public record CreateSalesOrderDto(
 		Long customerId,
@@ -13,7 +12,7 @@ public record CreateSalesOrderDto(
 
 		String deliveryAddress,
 
-		Optional<String> memo,
+		String memo,
 
 		@NonNull
 		OrderStatus orderStatus

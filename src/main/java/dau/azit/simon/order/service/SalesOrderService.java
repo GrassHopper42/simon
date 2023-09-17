@@ -30,7 +30,7 @@ public class SalesOrderService {
 					 new SalesOrderLine(salesOrderLine.productId(), salesOrderLine.quantity(), salesOrderLine.publicProductName(), salesOrderLine.salesPrice()))
 				.collect(Collectors.toList());
 
-		SalesOrder order = SalesOrder.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
+		SalesOrder order = SalesOrder.createOrder(orderLines, customer, dto.orderStatus(), dto.memo());
 
 		return orderRepository.save(order);
 	}
@@ -63,7 +63,7 @@ public class SalesOrderService {
 						new SalesOrderLine(salesOrderLine.productId(), salesOrderLine.quantity(), salesOrderLine.publicProductName(), salesOrderLine.salesPrice()))
 				.collect(Collectors.toList());
 
-		SalesOrder order = SalesOrder.createOrder(orderLines, customer, OrderStatus.ESTIMATION, dto.memo().orElse(null));
+		SalesOrder order = SalesOrder.createOrder(orderLines, customer, OrderStatus.ESTIMATION, dto.memo());
 
 		return orderRepository.save(order);
 	}

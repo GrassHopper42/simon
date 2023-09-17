@@ -1,7 +1,6 @@
 package dau.azit.simon.order.dto.request;
 
 import java.util.List;
-import java.util.Optional;
 
 public record CreateEstimationDto(
 		Long customerId,
@@ -10,6 +9,6 @@ public record CreateEstimationDto(
 
 		String deliveryAddress,
 
-		Optional<String> memo
+		String memo
 ) {
 }
