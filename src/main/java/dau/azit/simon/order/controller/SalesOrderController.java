@@ -51,4 +51,10 @@ public class SalesOrderController {
 		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
 	}
 
+	@GetMapping("/{salesOrderId}")
+	public ResponseEntity<SalesOrderDto> retrieveSalesOrderById(@PathVariable Long salesOrderId) {
+		SalesOrder salesOrder = salesOrderService.findSalesOrderById(salesOrderId);
+		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
+	}
+
 }

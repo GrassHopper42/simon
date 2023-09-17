@@ -67,4 +67,8 @@ public class SalesOrderService {
 
 		return orderRepository.save(order);
 	}
+
+	public SalesOrder findSalesOrderById(Long salesOrderId) {
+		return orderRepository.findById(salesOrderId).orElseThrow(() -> new IllegalArgumentException("order not found"));
+	}
 }
