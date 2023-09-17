@@ -1,6 +1,6 @@
 package dau.azit.simon.employee.repository;
 
-import dau.azit.simon.employee.entity.Employee;
+import dau.azit.simon.employee.domain.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

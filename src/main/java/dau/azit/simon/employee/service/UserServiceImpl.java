@@ -1,7 +1,7 @@
 package dau.azit.simon.employee.service;
 
-import dau.azit.simon.employee.entity.Employee;
-import dau.azit.simon.employee.entity.UserDetailsImpl;
+import dau.azit.simon.employee.domain.Employee;
+import dau.azit.simon.employee.domain.UserDetailsImpl;
 import dau.azit.simon.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;

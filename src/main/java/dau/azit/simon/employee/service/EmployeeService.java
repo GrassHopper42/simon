@@ -1,10 +1,10 @@
 package dau.azit.simon.employee.service;
 
-import dau.azit.simon.employee.dto.EmployeeCreateRequestDto;
-import dau.azit.simon.employee.dto.EmployeeLoginRequestDto;
-import dau.azit.simon.employee.dto.EmployeeUpdateRequestDto;
-import dau.azit.simon.employee.entity.Employee;
-import dau.azit.simon.employee.entity.UserRole;
+import dau.azit.simon.employee.dto.request.EmployeeCreateDto;
+import dau.azit.simon.employee.dto.request.EmployeeLoginDto;
+import dau.azit.simon.employee.dto.request.EmployeeUpdateDto;
+import dau.azit.simon.employee.domain.Employee;
+import dau.azit.simon.employee.domain.UserRole;
 import dau.azit.simon.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,7 +26,7 @@ public class EmployeeService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public Page<Employee> findAllEmployee(Pageable pageable) {
+    public Page<Employee>   findAllEmployee(Pageable pageable) {
         return employeeRepository.findAll(pageable);
     }
 
@@ -42,16 +42,16 @@ public class EmployeeService {
         return employeeRepository.findByPhoneNumber(phoneNumber).orElseThrow();
     }
 
-    public void login(EmployeeLoginRequestDto dto) {
+    public void login(EmployeeLoginDto dto) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.phoneNumber(), dto.password());
         authenticationManagerBuilder.getObject().authenticate(authenticationToken);
     }
 
     @Transactional
-    public Employee register(EmployeeCreateRequestDto dto) {
+    public Employee register(EmployeeCreateDto dto) {
         String encodedPassword = passwordEncoder.encode(dto.password());
         Employee employee = new Employee(
-                UserRole.valueOf(dto.role()),
+                UserRole.valueOf(dto.role().toUpperCase()),
                 dto.name(),
                 dto.address(),
                 dto.description(),
@@ -62,7 +62,7 @@ public class EmployeeService {
     }
 
     @Transactional
-    public Employee modifyOne(UUID uid, EmployeeUpdateRequestDto dto) {
+    public Employee modifyOne(UUID uid, EmployeeUpdateDto dto) {
         Employee employee = findOneByUid(uid);
         employee.updateField(dto.name(), dto.address(), dto.description());
         return employee;
