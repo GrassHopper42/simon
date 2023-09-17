@@ -50,7 +50,7 @@ public class SalesOrderController {
 	}
 
 	@Transactional
-	@PostMapping("/estimation")
+	@PostMapping("/estimations")
 	public ResponseEntity<SalesOrderDto> createEstimation(@Valid @RequestBody CreateEstimationDto dto) {
 		SalesOrder salesOrder = salesOrderService.createEstimation(dto);
 		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
