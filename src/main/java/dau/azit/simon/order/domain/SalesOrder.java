@@ -30,7 +30,7 @@ public class SalesOrder {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 
-	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "salesOrder")
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "salesOrder", fetch = FetchType.EAGER)
 	private List<SalesOrderLine> orderLines;
 
 	@ManyToOne
@@ -69,5 +69,12 @@ public class SalesOrder {
 
 	public void changeStatus(OrderStatus orderStatus) {
 		this.status = orderStatus;
+	}
+
+	public void convertToOrder() {
+		if (!this.status.equals(OrderStatus.ESTIMATION)) {
+			throw new IllegalStateException("주문 상태가 견적 상태가 아닙니다.");
+		}
+		this.status = OrderStatus.ORDER_COMPLETE;
 	}
 }
