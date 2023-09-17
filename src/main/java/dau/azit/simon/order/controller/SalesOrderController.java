@@ -1,6 +1,5 @@
 package dau.azit.simon.order.controller;
 
-
 import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.dto.request.*;
 import dau.azit.simon.order.dto.response.SalesOrderDto;
@@ -21,32 +20,32 @@ public class SalesOrderController {
 	private final SalesOrderService salesOrderService;
 
 	@PostMapping
-	public ResponseEntity<SalesOrderDto> createOrder(@Valid @RequestBody() CreateSalesOrderDto dto) {
+	public ResponseEntity<SalesOrderDto> createOrder(@Valid @RequestBody CreateSalesOrderDto dto) {
 		SalesOrder salesOrder = salesOrderService.createSalesOrder(dto);
 		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
 	}
 
 	@PatchMapping("/cancel")
-	public ResponseEntity<List<SalesOrderDto>> cancelOrder(@Valid @RequestBody() CancelSalesOrdersDto dto) {
+	public ResponseEntity<List<SalesOrderDto>> cancelOrder(@Valid @RequestBody CancelSalesOrdersDto dto) {
 		List<SalesOrder> salesOrders = salesOrderService.cancelSalesOrders(dto.customerId(), dto.salesOrderIds());
 		return ResponseEntity.ok(salesOrders.stream().map(SalesOrderDto::from).collect(Collectors.toList()));
 	}
 
 	@PatchMapping("/restore")
-	public ResponseEntity<List<SalesOrderDto>> restoreOrders(@Valid @RequestBody() RestoreSalesOrdersDto dto) {
+	public ResponseEntity<List<SalesOrderDto>> restoreOrders(@Valid @RequestBody RestoreSalesOrdersDto dto) {
 		List<SalesOrder> salesOrders = salesOrderService.restoreSalesOrders(dto.customerId(), dto.salesOrderIds());
 		return ResponseEntity.ok(salesOrders.stream().map(SalesOrderDto::from).collect(Collectors.toList()));
 	}
 
 	@PatchMapping("/status")
-	public ResponseEntity<SalesOrderDto> changeOrderStatus(@Valid @RequestBody() ChangeOrderStatusDto dto) {
+	public ResponseEntity<SalesOrderDto> changeOrderStatus(@Valid @RequestBody ChangeOrderStatusDto dto) {
 		SalesOrder salesOrder = salesOrderService.changeOrderStatus(dto.customerId(), dto.salesOrderId(), dto.orderStatus());
 		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
 	}
 
 	@Transactional
 	@PostMapping("/estimation")
-	public ResponseEntity<SalesOrderDto> createEstimation(@Valid @RequestBody() CreateEstimationDto dto) {
+	public ResponseEntity<SalesOrderDto> createEstimation(@Valid @RequestBody CreateEstimationDto dto) {
 		SalesOrder salesOrder = salesOrderService.createEstimation(dto);
 		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
 	}
