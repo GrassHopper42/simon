@@ -17,6 +17,9 @@ public class Init {
 
     @PostConstruct
     public void init() {
+        if (employeeRepository.findByPhoneNumber("admin").isPresent()) {
+            return;
+        }
         employeeRepository.save(new Employee(
                 UserRole.ADMIN, "admin", null, null,
                 "admin", passwordEncoder.encode("admin"))

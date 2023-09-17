@@ -5,7 +5,7 @@ import dau.azit.simon.employee.domain.UserRole;
 
 import java.util.UUID;
 
-public record EmployeeCheckDto(
+public record EmployeeResponseDto(
         UUID uuid,
         UserRole role,
         String name,
@@ -14,8 +14,8 @@ public record EmployeeCheckDto(
         String phoneNumber
 ) {
 
-    public static EmployeeCheckDto from(Employee employee) {
-        return new EmployeeCheckDto(
+    public static EmployeeResponseDto from(Employee employee) {
+        return new EmployeeResponseDto(
                 employee.getUid(),
                 employee.getRole(),
                 employee.getName(),
