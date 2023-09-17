@@ -43,6 +43,12 @@ public class SalesOrderController {
 		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
 	}
 
+	@PostMapping("/{estimationId}")
+	public ResponseEntity<SalesOrderDto> convertEstimationToOrder(@PathVariable Long estimationId, @Valid @RequestBody ConvertEstimationToOrder dto) {
+		SalesOrder salesOrder = salesOrderService.convertEstimationToOrder(estimationId, dto.customerId());
+		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
+	}
+
 	@Transactional
 	@PostMapping("/estimation")
 	public ResponseEntity<SalesOrderDto> createEstimation(@Valid @RequestBody CreateEstimationDto dto) {

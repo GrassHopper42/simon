@@ -71,4 +71,11 @@ public class SalesOrderService {
 	public SalesOrder findSalesOrderById(Long salesOrderId) {
 		return orderRepository.findById(salesOrderId).orElseThrow(() -> new IllegalArgumentException("order not found"));
 	}
+
+	@Transactional
+	public SalesOrder convertEstimationToOrder(Long estimationId, Long customerId) {
+		SalesOrder order = orderRepository.findByCustomerIdAndId(customerId, estimationId).orElseThrow(() -> new IllegalArgumentException("estimation not found"));
+		order.convertToOrder();
+		return order;
+	}
 }
