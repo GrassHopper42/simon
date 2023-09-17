@@ -6,11 +6,15 @@ import dau.azit.simon.order.dto.request.CancelSalesOrdersDto;
 import dau.azit.simon.order.dto.request.ChangeOrderStatusDto;
 import dau.azit.simon.order.dto.request.CreateSalesOrderDto;
 import dau.azit.simon.order.dto.request.RestoreSalesOrdersDto;
+import dau.azit.simon.order.dto.response.SalesOrderDto;
 import dau.azit.simon.order.service.SalesOrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,27 +23,27 @@ public class SalesOrderController {
 	private final SalesOrderService salesOrderService;
 
 	@PostMapping
-	public ResponseEntity<SalesOrder> createOrder(@Valid @RequestBody() CreateSalesOrderDto dto) {
-		salesOrderService.createSalesOrder(dto);
-		return ResponseEntity.ok(null);
+	public ResponseEntity<SalesOrderDto> createOrder(@Valid @RequestBody() CreateSalesOrderDto dto) {
+		SalesOrder salesOrder = salesOrderService.createSalesOrder(dto);
+		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
 	}
 
 	@PatchMapping("/cancel")
-	public ResponseEntity<Void> cancelOrder(@Valid @RequestBody() CancelSalesOrdersDto dto) {
-		salesOrderService.cancelSalesOrders(dto.customerId(), dto.salesOrderIds());
-		return ResponseEntity.ok(null);
+	public ResponseEntity<List<SalesOrderDto>> cancelOrder(@Valid @RequestBody() CancelSalesOrdersDto dto) {
+		List<SalesOrder> salesOrders = salesOrderService.cancelSalesOrders(dto.customerId(), dto.salesOrderIds());
+		return ResponseEntity.ok(salesOrders.stream().map(SalesOrderDto::from).collect(Collectors.toList()));
 	}
 
 	@PatchMapping("/restore")
-	public ResponseEntity<Void> restoreOrders(@Valid @RequestBody() RestoreSalesOrdersDto dto) {
-		salesOrderService.restoreSalesOrders(dto.customerId(), dto.salesOrderIds());
-		return ResponseEntity.ok(null);
+	public ResponseEntity<List<SalesOrderDto>> restoreOrders(@Valid @RequestBody() RestoreSalesOrdersDto dto) {
+		List<SalesOrder> salesOrders = salesOrderService.restoreSalesOrders(dto.customerId(), dto.salesOrderIds());
+		return ResponseEntity.ok(salesOrders.stream().map(SalesOrderDto::from).collect(Collectors.toList()));
 	}
 
 	@PatchMapping("/status")
-	public ResponseEntity<Void> changeOrderStatus(@Valid @RequestBody() ChangeOrderStatusDto dto) {
-		salesOrderService.changeOrderStatus(dto.customerId(), dto.salesOrderId(), dto.orderStatus());
-		return ResponseEntity.ok(null);
+	public ResponseEntity<SalesOrderDto> changeOrderStatus(@Valid @RequestBody() ChangeOrderStatusDto dto) {
+		SalesOrder salesOrder = salesOrderService.changeOrderStatus(dto.customerId(), dto.salesOrderId(), dto.orderStatus());
+		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
 	}
 
 }

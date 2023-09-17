@@ -30,7 +30,7 @@ public class SalesOrder {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 
-	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "salesOrder")
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "salesOrder", fetch = FetchType.EAGER)
 	private List<SalesOrderLine> orderLines;
 
 	@ManyToOne

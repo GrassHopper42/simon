@@ -22,7 +22,7 @@ public class SalesOrderService {
 	private final CustomerService customerService;
 
 	@Transactional
-	public void createSalesOrder(CreateSalesOrderDto dto) {
+	public SalesOrder createSalesOrder(CreateSalesOrderDto dto) {
 		Customer customer = customerService.findCustomerById(dto.customerId());
 		List<SalesOrderLine> orderLines = dto.salesOrderLines().stream()
 				.map(salesOrderLine ->
@@ -31,24 +31,27 @@ public class SalesOrderService {
 
 		SalesOrder order = SalesOrder.createOrder(orderLines, customer, dto.orderStatus(), dto.memo().orElse(null));
 
-		orderRepository.save(order);
+		return orderRepository.save(order);
 	}
 
 	@Transactional
-	public void cancelSalesOrders(Long customerId, List<Long> orderIds) {
+	public List<SalesOrder> cancelSalesOrders(Long customerId, List<Long> orderIds) {
 		List<SalesOrder> orders = orderRepository.findByCustomerIdAndIdIn(customerId, orderIds);
 		orders.forEach(SalesOrder::cancel);
+		return orders;
 	}
 
 	@Transactional
-	public void restoreSalesOrders(Long customerId, List<Long> orderIds) {
+	public List<SalesOrder> restoreSalesOrders(Long customerId, List<Long> orderIds) {
 		List<SalesOrder> orders = orderRepository.findByCustomerIdAndIdIn(customerId, orderIds);
 		orders.forEach(SalesOrder::restore);
+		return orders;
 	}
 
 	@Transactional
-	public void changeOrderStatus(Long customerId, Long salesOrderId, OrderStatus orderStatus) {
+	public SalesOrder changeOrderStatus(Long customerId, Long salesOrderId, OrderStatus orderStatus) {
 		SalesOrder order = orderRepository.findByCustomerIdAndId(customerId, salesOrderId).orElseThrow(() -> new IllegalArgumentException("order not found"));
 		order.changeStatus(orderStatus);
+		return order;
 	}
 }
