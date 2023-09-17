@@ -5,6 +5,7 @@ import dau.azit.simon.customer.service.CustomerService;
 import dau.azit.simon.order.domain.OrderStatus;
 import dau.azit.simon.order.domain.SalesOrder;
 import dau.azit.simon.order.domain.SalesOrderLine;
+import dau.azit.simon.order.dto.request.CreateEstimationDto;
 import dau.azit.simon.order.dto.request.CreateSalesOrderDto;
 import dau.azit.simon.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -53,5 +54,17 @@ public class SalesOrderService {
 		SalesOrder order = orderRepository.findByCustomerIdAndId(customerId, salesOrderId).orElseThrow(() -> new IllegalArgumentException("order not found"));
 		order.changeStatus(orderStatus);
 		return order;
+	}
+
+	public SalesOrder createEstimation(CreateEstimationDto dto) {
+		Customer customer = customerService.findCustomerById(dto.customerId());
+		List<SalesOrderLine> orderLines = dto.salesOrderLines().stream()
+				.map(salesOrderLine ->
+						new SalesOrderLine(salesOrderLine.productId(), salesOrderLine.quantity(), salesOrderLine.publicProductName(), salesOrderLine.salesPrice()))
+				.collect(Collectors.toList());
+
+		SalesOrder order = SalesOrder.createOrder(orderLines, customer, OrderStatus.ESTIMATION, dto.memo().orElse(null));
+
+		return orderRepository.save(order);
 	}
 }

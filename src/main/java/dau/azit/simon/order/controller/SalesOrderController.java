@@ -2,15 +2,13 @@ package dau.azit.simon.order.controller;
 
 
 import dau.azit.simon.order.domain.SalesOrder;
-import dau.azit.simon.order.dto.request.CancelSalesOrdersDto;
-import dau.azit.simon.order.dto.request.ChangeOrderStatusDto;
-import dau.azit.simon.order.dto.request.CreateSalesOrderDto;
-import dau.azit.simon.order.dto.request.RestoreSalesOrdersDto;
+import dau.azit.simon.order.dto.request.*;
 import dau.azit.simon.order.dto.response.SalesOrderDto;
 import dau.azit.simon.order.service.SalesOrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,6 +41,13 @@ public class SalesOrderController {
 	@PatchMapping("/status")
 	public ResponseEntity<SalesOrderDto> changeOrderStatus(@Valid @RequestBody() ChangeOrderStatusDto dto) {
 		SalesOrder salesOrder = salesOrderService.changeOrderStatus(dto.customerId(), dto.salesOrderId(), dto.orderStatus());
+		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
+	}
+
+	@Transactional
+	@PostMapping("/estimation")
+	public ResponseEntity<SalesOrderDto> createEstimation(@Valid @RequestBody() CreateEstimationDto dto) {
+		SalesOrder salesOrder = salesOrderService.createEstimation(dto);
 		return ResponseEntity.ok(SalesOrderDto.from(salesOrder));
 	}
 
