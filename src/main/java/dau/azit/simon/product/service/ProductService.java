@@ -31,23 +31,22 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProduct(ProductId id, UpdateProductDto dto) {
+    public void updateProduct(Long id, UpdateProductDto dto) {
         Product product = productRepository.findById(id).orElseThrow();
         if (!dto.name().isBlank()) product.changeName(dto.name());
-        if (!dto.location().isBlank()) product.updateLocation(new Location(dto.location()));
         if (!dto.description().isBlank()) product.changeDescription(dto.description());
         if (dto.price() != null && dto.price() >= 0) {
             product.fixPrice(new Money(dto.price()));
         }
     }
 
-    public void changeCategory(ProductId id, Long categoryId) {
+    public void changeCategory(Long id, Long categoryId) {
         Category category = this.categoryRepository.getReferenceById(categoryId);
         Product product = this.productRepository.findById(id).orElseThrow();
         product.changeCategory(category);
     }
 
-    public void removeProduct(ProductId id) {
+    public void removeProduct(Long id) {
         Product product = productRepository.findById(id).orElseThrow();
         product.delete();
     }

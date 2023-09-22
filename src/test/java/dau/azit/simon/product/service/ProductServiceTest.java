@@ -2,7 +2,6 @@ package dau.azit.simon.product.service;
 
 import dau.azit.simon.product.domain.Category;
 import dau.azit.simon.product.domain.Product;
-import dau.azit.simon.product.domain.ProductId;
 import dau.azit.simon.product.dto.CreateProductDto;
 import dau.azit.simon.product.repository.CategoryRepository;
 import dau.azit.simon.product.repository.ProductRepository;
@@ -36,11 +35,10 @@ class ProductServiceTest {
             String code = "test0001";
             String name = "test product";
             CreateProductDto dto = new CreateProductDto(1L, code, name);
-            Product product = new Product(new ProductId(1L), code, name, null, null, null, null);
 
             given(productRepository
                     .save(any(Product.class)))
-                    .willReturn(product);
+                    .willReturn(new Product());
             given(categoryRepository
                     .getReferenceById(1L))
                     .willReturn(new Category("test"));

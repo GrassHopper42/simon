@@ -9,14 +9,14 @@ import java.util.Objects;
 @Embeddable
 public class ProductSupplyKey implements Serializable {
     @Column(name = "product_id")
-    private ProductId productId;
+    private Long productId;
 
     @Column(name = "supplier_id")
-    private SupplierId supplierId;
+    private Long supplierId;
 
     public ProductSupplyKey() {}
 
-    public ProductSupplyKey(ProductId productId, SupplierId supplierId) {
+    public ProductSupplyKey(Long productId, Long supplierId) {
         this.productId = productId;
         this.supplierId = supplierId;
     }
